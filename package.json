@@ -1,0 +1,50 @@
+{
+  "name": "idealist",
+  "version": "0.1.0-alpha",
+  "description": "Functional HTTP micro-framework",
+  "main": "index.js",
+  "repository": "https://github.com/Avaq/idealist.git",
+  "scripts": {
+    "check-security": "nsp check",
+    "check-version": "node scripts/check-version 5.0.0",
+    "clean": "rimraf npm-debug.log coverage",
+    "lint": "eslint lib test",
+    "post-merge": "npm run check-version && npm install && npm dedupe && npm run check-security && npm outdated --long",
+    "pre-push": "npm test",
+    "setup": "npm run post-merge && cp scripts/hooks/* .git/hooks && git config push.followTags true",
+    "test": "npm run check-version && npm run clean && npm run lint && npm run test:unit && npm run test:coverage",
+    "test:unit": "node --harmony-destructuring ./node_modules/.bin/_mocha --ui bdd --reporter spec --check-leaks --full-trace",
+    "test:coverage": "node --harmony-destructuring node_modules/.bin/istanbul cover --report html ./node_modules/.bin/_mocha -- --ui bdd --reporter dot --bail --check-leaks && codecov"
+  },
+  "author": "Aldwin Vlasblom <aldwin.vlasblom@gmail.com> (https://github.com/Avaq)",
+  "homepage": "https://github.com/Avaq/Idealist",
+  "bugs": {
+    "url": "https://github.com/Avaq/Idealist/issues"
+  },
+  "license": "MIT",
+  "engines": {
+    "node": "^5.0.0"
+  },
+  "files": [
+    "index.js",
+    "lib"
+  ],
+  "keywords": [],
+  "dependencies": {
+    "fantasy-states": "^0.2.1",
+    "fluture": "^0.6.5",
+    "freeky": "0.0.1",
+    "sanctuary": "^0.9.1"
+  },
+  "devDependencies": {
+    "chai": "^3.4.0",
+    "codecov": "^1.0.1",
+    "eslint": "^2.2.0",
+    "istanbul": "^0.4.2",
+    "jsverify": "^0.7.1",
+    "mocha": "^2.3.3",
+    "nsp": "^2.2.0",
+    "ramda": "^0.20.1",
+    "rimraf": "^2.4.3"
+  }
+}
