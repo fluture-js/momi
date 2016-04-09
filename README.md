@@ -9,7 +9,7 @@ Functional HTTP micro-framework.
 const App = require('idealist');
 const R = require('ramda');
 
-//Import some Free Moands we'd like to use.
+//Import some Free Monads we'd like to use.
 const FreeState = require('freeky/state');
 
 //Some lenses to work with the Response structure.
@@ -24,6 +24,8 @@ const app = App.empty()
 .use(R.map(R.over(headers, R.assoc('X-Powered-By', 'Monads'))))
 
 //We can install our own interpreter, which must return a StateFuture.
+//Normally we wouldn't have to do this. The `App.freeky()` constructor would come
+//with pre-installed interpreters for all freeky Monads.
 .install(FreeState, m => App.StateFuture(state => {
   const x = m.run(state);
   return App.Future.of({_0: x[0], _1: x[1]});
@@ -59,7 +61,7 @@ const middleware = next => Monad.do(function*(){
 }, Free.of);
 
 //Middleware are pure compsable functions which compose in reverse, so we could:
-actualApp.use(pipe(middleware, middleware, middleware));
+actualApp.use(pipe(middleware3, middleware2, middleware1));
 
 //Mounts an app on the specified port. The third argument will appear on the
 //request state as "config".
