@@ -1,49 +1,60 @@
-//Import dependencies.
 const App = require('.');
 const R = require('ramda');
+const S = require('sanctuary');
+const {Idealist, Future} = App;
 
-//Import some Free Moands we'd like to use.
-const FreeState = require('freeky/state');
-
-//Some lenses to work with the Response structure.
+const status = R.lensProp('status');
 const headers = R.lensProp('headers');
 const body = R.lensProp('body');
-const status = R.lensProp('status');
 
-//Create an empty App.
+const connectToDatabase = c => Future.after(300, {'@@type': 'database', c});
+const closeDatabase = c => Future.after(50, `Database ${c.c} closed`).map(console.log)
+const findUser = (db, name) => Future.after(50, db['@@type'] === 'database' && name === 'bob'
+  ? {name: 'bob'}
+  : null
+);
+
+//Our own way to handle Future errors, lifted into the Idealist world.
+const attempt = App.liftf(Future.fold(S.Left, S.Right));
+const errorToResponse = e => ({
+  status: 500,
+  headers: {},
+  body: {message: e.val.message, name: e.val.name}
+})
+
+//Create the app
 const app = App.empty()
 
-//We can just map over the monad and use the "headers" lens to modify the response headers
-.use(R.map(R.over(headers, R.assoc('X-Powered-By', 'Monads'))))
+  //Error handling
+  .use(App.do(function*(next){
+    const e = yield attempt(next);
+    return S.either(errorToResponse, S.I, e);
+  }))
 
-//We can install our own interpreter, which must return a StateFuture.
-.install(FreeState, m => App.StateFuture(state => {
-  const x = m.run(state);
-  return App.Future.of({_0: x[0], _1: x[1]});
-}))
+  //We can just map over the monad and use the "headers" lens to modify the response headers
+  .use(R.map(R.over(headers, R.assoc('X-Powered-By', 'Monads'))))
 
-//And now we can use it!
-.use(next => FreeState.get.chain(state => {
-  console.log('The request URL is', state.req.url);
-  console.log('The database config is', state.config.db);
-  return next; //chain the "next" monad
-}))
+  //...or turn every response body into JSON
+  .use(R.map(R.over(body, JSON.stringify)))
 
-//We can plain ignore the input Monad and return our own. This is like not calling "next"
-// .use(() => App.Free.of({status: 200, body: 'wut?', headers: {}}))
+  //Use do-notation to create middleware
+  .use(App.do(function*(next){
+    const {config} = yield Idealist.get;
+    const db = yield Idealist.lift(connectToDatabase(config.db));
+    yield Idealist.modify(R.assoc('db', db));
+    const res = yield next;
+    yield Idealist.lift(closeDatabase(db));
+    return res;
+  }))
 
-//Set the status and body by using lenses
-.use(R.map(R.pipe(
-  R.set(status, 200),
-  R.set(body, 'Secret sauce!')
-)));
+  //This endpoint simply ignores the "next" Monad
+  .use(App.do(function*(){
+    const {db} = yield Idealist.get;
+    const user = yield Idealist.lift(findUser(db, 'bob'))
+    return {status: 200, body: user, headers: {}};
+  }))
 
-//The returned app instance is also "middleware".
-//Note that we must first "concat" to join the interpreters of both apps.
-const actualApp = App.empty().concat(app).use(app);
 
-//Mounts an app on the specified port. The third argument will appear on the
-//request state as "config".
-App.mount(actualApp, 3000, {
+App.mount(app, 3000, {
   db: 'mydb://username:password@localhost:1337/db'
 });

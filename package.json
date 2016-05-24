@@ -32,9 +32,7 @@
   "keywords": [],
   "dependencies": {
     "fantasy-states": "^0.2.1",
-    "fluture": "^0.6.5",
-    "freeky": "0.0.1",
-    "sanctuary": "^0.9.1"
+    "fluture": "^1.0.3"
   },
   "devDependencies": {
     "chai": "^3.4.0",
@@ -45,6 +43,7 @@
     "mocha": "^2.3.3",
     "nsp": "^2.2.0",
     "ramda": "^0.20.1",
-    "rimraf": "^2.4.3"
+    "rimraf": "^2.4.3",
+    "sanctuary": "^0.10.0"
   }
 }
