@@ -11,6 +11,7 @@
     "lint:fix": "eslint --fix lib test index.js",
     "post-merge": "npm install && npm dedupe && npm run check-security && npm outdated --long",
     "pre-push": "npm test",
+    "release": "xyz --edit --tag 'X.Y.Z' --increment",
     "setup": "npm run post-merge && cp scripts/hooks/* .git/hooks && git config push.followTags true",
     "test": "npm run clean && npm run lint && npm run test:unit && npm run test:coverage",
     "test:unit": "node ./node_modules/.bin/_mocha --ui bdd --reporter spec --check-leaks --full-trace",
@@ -45,6 +46,7 @@
     "nsp": "^2.2.0",
     "ramda": "^0.20.1",
     "rimraf": "^2.4.3",
-    "sanctuary": "^0.10.0"
+    "sanctuary": "^0.10.0",
+    "xyz": "^1.1.0"
   }
 }
