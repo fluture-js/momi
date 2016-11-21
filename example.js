@@ -19,7 +19,7 @@ const attempt = App.liftf(Future.fold(S.Left, S.Right));
 const errorToResponse = e => ({
   status: 500,
   headers: {},
-  body: {message: e.val.message, name: e.val.name}
+  body: {message: e.message, name: e.name}
 })
 
 //Create the app
