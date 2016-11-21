@@ -1,7 +1,7 @@
 {
   "name": "idealist",
   "version": "0.1.0-alpha",
-  "description": "Functional HTTP micro-framework",
+  "description": "Monadic middleware",
   "main": "index.js",
   "repository": "https://github.com/Avaq/idealist.git",
   "scripts": {
