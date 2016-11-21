@@ -7,7 +7,8 @@
   "scripts": {
     "check-security": "nsp check",
     "clean": "rimraf npm-debug.log coverage",
-    "lint": "eslint lib test",
+    "lint": "eslint lib test index.js",
+    "lint:fix": "eslint --fix lib test index.js",
     "post-merge": "npm install && npm dedupe && npm run check-security && npm outdated --long",
     "pre-push": "npm test",
     "setup": "npm run post-merge && cp scripts/hooks/* .git/hooks && git config push.followTags true",
@@ -36,7 +37,8 @@
   "devDependencies": {
     "chai": "^3.4.0",
     "codecov": "^1.0.1",
-    "eslint": "^2.2.0",
+    "eslint": "^3.10.2",
+    "eslint-config-warp": "^1.2.0",
     "istanbul": "^0.4.2",
     "jsverify": "^0.7.1",
     "mocha": "^2.3.3",
