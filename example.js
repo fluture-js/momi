@@ -1,14 +1,16 @@
+'use strict';
+
 const App = require('.');
 const R = require('ramda');
 const S = require('sanctuary');
-const {Idealist, Future} = App;
+const {Middleware, Future} = App;
+const {log} = require('util');
 
-const status = R.lensProp('status');
 const headers = R.lensProp('headers');
 const body = R.lensProp('body');
 
 const connectToDatabase = c => Future.after(300, {'@@type': 'database', c});
-const closeDatabase = c => Future.after(50, `Database ${c.c} closed`).map(console.log)
+const closeDatabase = c => Future.after(50, `Database ${c.c} closed`).map(log);
 const findUser = (db, name) => Future.after(50, db['@@type'] === 'database' && name === 'bob'
   ? {name: 'bob'}
   : null
@@ -20,13 +22,13 @@ const errorToResponse = e => ({
   status: 500,
   headers: {},
   body: {message: e.message, name: e.name}
-})
+});
 
 //Create the app
 const app = App.empty()
 
   //Error handling
-  .use(App.do(function*(next){
+  .use(App.do(function*(next) {
     const e = yield attempt(next);
     return S.either(errorToResponse, S.I, e);
   }))
@@ -38,21 +40,21 @@ const app = App.empty()
   .use(R.map(R.over(body, JSON.stringify)))
 
   //Use do-notation to create middleware
-  .use(App.do(function*(next){
-    const {config} = yield Idealist.get;
-    const db = yield Idealist.lift(connectToDatabase(config.db));
-    yield Idealist.modify(R.assoc('db', db));
+  .use(App.do(function*(next) {
+    const {config} = yield Middleware.get;
+    const db = yield Middleware.lift(connectToDatabase(config.db));
+    yield Middleware.modify(R.assoc('db', db));
     const res = yield next;
-    yield Idealist.lift(closeDatabase(db));
+    yield Middleware.lift(closeDatabase(db));
     return res;
   }))
 
   //This endpoint simply ignores the "next" Monad
-  .use(App.do(function*(){
-    const {db} = yield Idealist.get;
-    const user = yield Idealist.lift(findUser(db, 'bob'))
+  .use(App.do(function*() {
+    const {db} = yield Middleware.get;
+    const user = yield Middleware.lift(findUser(db, 'bob'));
     return {status: 200, body: user, headers: {}};
-  }))
+  }));
 
 
 App.mount(app, 3000, {
