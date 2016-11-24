@@ -1,9 +1,9 @@
 {
-  "name": "idealist",
-  "version": "0.1.0-alpha",
+  "name": "momi",
+  "version": "0.1.0",
   "description": "Monadic middleware",
   "main": "index.js",
-  "repository": "https://github.com/Avaq/idealist.git",
+  "repository": "https://github.com/Avaq/momi.git",
   "scripts": {
     "check-security": "nsp check",
     "clean": "rimraf npm-debug.log coverage",
@@ -18,9 +18,9 @@
     "test:coverage": "node node_modules/.bin/istanbul cover --report html ./node_modules/.bin/_mocha -- --ui bdd --reporter dot --bail --check-leaks && codecov"
   },
   "author": "Aldwin Vlasblom <aldwin.vlasblom@gmail.com> (https://github.com/Avaq)",
-  "homepage": "https://github.com/Avaq/Idealist",
+  "homepage": "https://github.com/Avaq/momi",
   "bugs": {
-    "url": "https://github.com/Avaq/Idealist/issues"
+    "url": "https://github.com/Avaq/momi/issues"
   },
   "license": "MIT",
   "engines": {

@@ -17,7 +17,7 @@ const findUser = (db, name) => Future.after(50, db['@@type'] === 'database' && n
 );
 
 
-//Our own way to handle Future errors, lifted into the Idealist world.
+//Our own way to handle Future errors, lifted into the momi world.
 const attempt = App.liftf(Future.fold(S.Left, S.Right));
 const errorToResponse = e => ({
   status: 500,

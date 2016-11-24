@@ -1,8 +1,8 @@
-# Idealist
+# momi
 
-Monadic Middleware
+**Mo**nadic **Mi**ddleware
 
-> npm install idealist
+> npm install momi
 
 Middleware - specifically in the case of Connect, Express and Koa - is a
 mechanism which encodes several effects:
