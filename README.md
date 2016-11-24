@@ -4,6 +4,30 @@ Monadic Middleware
 
 > npm install idealist
 
+Middleware - specifically in the case of Connect, Express and Koa - is a
+mechanism which encodes several effects:
+
+- **A build-up of state** through mutation of the `req` parameter
+- **An eventual response** through mutation of the `res` parameter
+- **Inversion of control** over the continuation by means of calling the `next` parameter
+- **Possible error branch** by means of calling the `next` parameter with a value
+
+If we would want to encode all of these effects into a data-structure, we would
+end up with a `StateT(Future)`:
+
+- **A build-up of state** through `State.modify`
+- **An eventual response** through the right-sided value of `Future`
+- **Inversion of control** By running raw (not lifted) functions over the structure
+- **Possible error branch** through the left-sided value of `Future`
+
+In other words, the `StateT(Future)`-structure might be considered the
+Middleware monad. This packages exposes the Middleware monad, comprised of
+`State` from [fantasy-states][] and `Future` from [Fluture][]. Besides the
+monad itself, it also exposes some utility functions and structures for
+practically applying Middleware. One such structure is the `App` structure,
+which allows composition of functions over Middleware to be written more like
+what you are used to from middleware as it comes with Connect, Express or Koa.
+
 ## Usage
 
 See `examples/readme/index.js` for the complete working code
@@ -41,3 +65,6 @@ const app = App.empty()
     return {status: 200, body: user, headers: {}};
   }));
 ```
+
+[fantasy-states]: https://github.com/fantasyland/fantasy-states
+[Fluture]: https://github.com/Avaq/Fluture
