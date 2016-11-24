@@ -10,12 +10,13 @@
     "lint": "eslint lib test index.js examples/*/*.js",
     "lint:fix": "eslint --fix lib test index.js examples/*/*.js",
     "post-merge": "npm install && npm dedupe && npm run check-security && npm outdated --long",
-    "pre-push": "npm test",
+    "pre-push": "npm run lint && npm run test:unit",
     "release": "xyz --edit --tag 'X.Y.Z' --increment",
     "setup": "npm run post-merge && cp scripts/hooks/* .git/hooks && git config push.followTags true",
-    "test": "npm run clean && npm run lint && npm run test:unit && npm run test:coverage",
-    "test:unit": "node ./node_modules/.bin/_mocha --ui bdd --reporter spec --check-leaks --full-trace",
-    "test:coverage": "node node_modules/.bin/istanbul cover --report html ./node_modules/.bin/_mocha -- --ui bdd --reporter dot --bail --check-leaks && codecov"
+    "test": "npm run test:all && codecov",
+    "test:all": "npm run lint && npm run test:unit && npm run test:coverage",
+    "test:unit": "node ./node_modules/.bin/_mocha --ui bdd --reporter list --check-leaks --full-trace test/**.test.js",
+    "test:coverage": "npm run clean && node node_modules/.bin/istanbul cover --report html ./node_modules/.bin/_mocha -- --ui bdd --reporter dot --bail test/**.test.js"
   },
   "author": "Aldwin Vlasblom <aldwin.vlasblom@gmail.com> (https://github.com/Avaq)",
   "homepage": "https://github.com/Avaq/momi",
