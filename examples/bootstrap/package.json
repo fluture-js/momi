@@ -1,0 +1,16 @@
+{
+  "name": "bootstrap",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "WTFPL",
+  "description": "",
+  "dependencies": {
+    "config": "^1.24.0",
+    "http-errors": "^1.5.1",
+    "mysql": "^2.12.0"
+  }
+}
