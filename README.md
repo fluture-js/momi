@@ -13,11 +13,11 @@ mechanism which encodes several effects:
 - **Possible error branch** by means of calling the `next` parameter with a value
 
 If we would want to encode all of these effects into a data-structure, we would
-end up with a `StateT(Future)`:
+end up with a `StateT(Future) -> StateT(Future)`:
 
 - **A build-up of state** through `State.modify`
 - **An eventual response** through the right-sided value of `Future`
-- **Inversion of control** By running raw (not lifted) functions over the structure
+- **Inversion of control** by running raw (not lifted) functions over the structure
 - **Possible error branch** through the left-sided value of `Future`
 
 In other words, the `StateT(Future)`-structure might be considered the
