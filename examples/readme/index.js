@@ -1,20 +1,21 @@
 'use strict';
 
-const App = require('.');
+const {Middleware, Future, App} = require('../../');
 const R = require('ramda');
 const S = require('sanctuary');
-const {Middleware, Future} = App;
 const {log} = require('util');
 
 const headers = R.lensProp('headers');
 const body = R.lensProp('body');
 
+const config = {db: 'mydb://username:password@localhost:1337/db'};
 const connectToDatabase = c => Future.after(300, {'@@type': 'database', c});
 const closeDatabase = c => Future.after(50, `Database ${c.c} closed`).map(log);
 const findUser = (db, name) => Future.after(50, db['@@type'] === 'database' && name === 'bob'
   ? {name: 'bob'}
   : null
 );
+
 
 //Our own way to handle Future errors, lifted into the Idealist world.
 const attempt = App.liftf(Future.fold(S.Left, S.Right));
@@ -26,6 +27,12 @@ const errorToResponse = e => ({
 
 //Create the app
 const app = App.empty()
+
+  //Add config to the state.
+  .use(App.do(function*(next) {
+    yield Middleware.modify(req => R.merge({config}, {req}));
+    return yield next;
+  }))
 
   //Error handling
   .use(App.do(function*(next) {
@@ -57,6 +64,4 @@ const app = App.empty()
   }));
 
 
-App.mount(app, 3000, {
-  db: 'mydb://username:password@localhost:1337/db'
-});
+App.mount(app, 3000);

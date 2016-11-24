@@ -1,12 +1,12 @@
 # Idealist
 
-Functional HTTP micro-framework.
+Monadic Middleware
 
 > npm install idealist
 
 ## Usage
 
-See `example.js` for the complete working code
+See `examples/readme/index.js` for the complete working code
 
 ```js
 //Create the app
