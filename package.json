@@ -7,8 +7,8 @@
   "scripts": {
     "check-security": "nsp check",
     "clean": "rimraf npm-debug.log coverage",
-    "lint": "eslint lib test index.js example*",
-    "lint:fix": "eslint --fix lib test index.js example*",
+    "lint": "eslint lib test index.js examples/*/*.js",
+    "lint:fix": "eslint --fix lib test index.js examples/*/*.js",
     "post-merge": "npm install && npm dedupe && npm run check-security && npm outdated --long",
     "pre-push": "npm test",
     "release": "xyz --edit --tag 'X.Y.Z' --increment",
