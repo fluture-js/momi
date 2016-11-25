@@ -12,12 +12,12 @@ mechanism which encodes several effects:
 - **Inversion of control** over the continuation by means of calling the `next` parameter
 - **Possible error branch** by means of calling the `next` parameter with a value
 
-If we would want to encode all of these effects into a data-structure, we would
-end up with a `StateT(Future) -> StateT(Future)`:
+If we would want to encode all of these effects into a data-structure, we could
+use a `StateT(Future) -> StateT(Future)` structure:
 
-- **A build-up of state** through `State.modify`
+- **A build-up of state** through the `State` monad
 - **An eventual response** through the right-sided value of `Future`
-- **Inversion of control** by running raw (not lifted) functions over the structure
+- **Inversion of control** by passing the whole structure into a function
 - **Possible error branch** through the left-sided value of `Future`
 
 In other words, the `StateT(Future)`-structure might be considered the
