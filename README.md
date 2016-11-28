@@ -24,7 +24,7 @@ In other words, the `StateT(Future)`-structure might be considered the
 Middleware monad. This packages exposes the Middleware monad, comprised of
 `State` from [fantasy-states][] and `Future` from [Fluture][]. Besides the
 monad itself, it also exposes some utility functions and structures for
-practically applying Middleware. One such structure is the `App` structure,
+practically applying Middleware. One such utility is the `App` class,
 which allows composition of functions over Middleware to be written more like
 what you are used to from middleware as it comes with Connect, Express or Koa.
 
