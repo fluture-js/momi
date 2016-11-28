@@ -1,67 +1,23 @@
 'use strict';
 
-const {Middleware, Future, App} = require('../../');
-const R = require('ramda');
-const S = require('sanctuary');
-const {log} = require('util');
+const {App, Middleware} = require('../../');
+const qs = require('querystring');
 
-const headers = R.lensProp('headers');
-const body = R.lensProp('body');
-
-const config = {db: 'mydb://username:password@localhost:1337/db'};
-const connectToDatabase = c => Future.after(300, {'@@type': 'database', c});
-const closeDatabase = c => Future.after(50, `Database ${c.c} closed`).map(log);
-const findUser = (db, name) => Future.after(50, db['@@type'] === 'database' && name === 'bob'
-  ? {name: 'bob'}
-  : null
-);
-
-
-//Our own way to handle Future errors, lifted into the momi world.
-const attempt = App.liftf(Future.fold(S.Left, S.Right));
-const errorToResponse = e => ({
-  status: 500,
-  headers: {},
-  body: {message: e.message, name: e.name}
+const queryParseMiddleware = App.do(function*(next) {
+  const req = yield Middleware.get;
+  const query = qs.parse(req.url.split('?')[1]);
+  yield Middleware.put(Object.assign({query}, req));
+  return yield next;
 });
 
-//Create the app
+const echoMiddleware = _ => Middleware.get.map(req => ({
+  status: 200,
+  headers: {'X-Powered-By': 'momi'},
+  body: req.query.echo
+}));
+
 const app = App.empty()
-
-  //Add config to the state.
-  .use(App.do(function*(next) {
-    yield Middleware.modify(req => R.merge({config}, {req}));
-    return yield next;
-  }))
-
-  //Error handling
-  .use(App.do(function*(next) {
-    const e = yield attempt(next);
-    return S.either(errorToResponse, S.I, e);
-  }))
-
-  //We can just map over the monad and use the "headers" lens to modify the response headers
-  .use(R.map(R.over(headers, R.assoc('X-Powered-By', 'Monads'))))
-
-  //...or turn every response body into JSON
-  .use(R.map(R.over(body, JSON.stringify)))
-
-  //Use do-notation to create middleware
-  .use(App.do(function*(next) {
-    const {config} = yield Middleware.get;
-    const db = yield Middleware.lift(connectToDatabase(config.db));
-    yield Middleware.modify(R.assoc('db', db));
-    const res = yield next;
-    yield Middleware.lift(closeDatabase(db));
-    return res;
-  }))
-
-  //This endpoint simply ignores the "next" Monad
-  .use(App.do(function*() {
-    const {db} = yield Middleware.get;
-    const user = yield Middleware.lift(findUser(db, 'bob'));
-    return {status: 200, body: user, headers: {}};
-  }));
-
+.use(queryParseMiddleware)
+.use(echoMiddleware);
 
 App.mount(app, 3000);

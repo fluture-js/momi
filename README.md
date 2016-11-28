@@ -30,41 +30,40 @@ what you are used to from middleware as it comes with Connect, Express or Koa.
 
 ## Usage
 
-See `examples/readme/index.js` for the complete working code
-
 ```js
-//Create the app
+const {App, Middleware} = require('momi');
+const qs = require('querystring');
+
+const queryParseMiddleware = App.do(function*(next) {
+  const req = yield Middleware.get;
+  const query = qs.parse(req.url.split('?')[1]);
+  yield Middleware.put(Object.assign({query}, req));
+  return yield next;
+});
+
+const echoMiddleware = _ => Middleware.get.map(req => ({
+  status: 200,
+  headers: {'X-Powered-By': 'momi'},
+  body: req.query.echo
+}));
+
 const app = App.empty()
+.use(queryParseMiddleware)
+.use(echoMiddleware);
 
-  //Error handling
-  .use(App.do(function*(next) {
-    const e = yield attempt(next);
-    return S.either(errorToResponse, S.I, e);
-  }))
-
-  //We can just map over the monad and use the "headers" lens to modify the response headers
-  .use(R.map(R.over(headers, R.assoc('X-Powered-By', 'Monads'))))
-
-  //...or turn every response body into JSON
-  .use(R.map(R.over(body, JSON.stringify)))
-
-  //Use do-notation to create middleware
-  .use(App.do(function*(next) {
-    const {config} = yield Middleware.get;
-    const db = yield Middleware.lift(connectToDatabase(config.db));
-    yield Middleware.modify(R.assoc('db', db));
-    const res = yield next;
-    yield Middleware.lift(closeDatabase(db));
-    return res;
-  }))
-
-  //This endpoint simply ignores the "next" Monad
-  .use(App.do(function*() {
-    const {db} = yield Middleware.get;
-    const user = yield Middleware.lift(findUser(db, 'bob'));
-    return {status: 200, body: user, headers: {}};
-  }));
+App.mount(app, 3000);
 ```
+
+## Examples
+
+- **[Readme][example-1]** the code from [Usage](#usage), ready to run.
+- **[Express][example-2]** shows how to embed Momi within Express.
+- **[Bootstrap][example-3]** an extensive example showing application structure.
+- **[Real World][example-4]** how momi is being used in real life.
 
 [fantasy-states]: https://github.com/fantasyland/fantasy-states
 [Fluture]: https://github.com/Avaq/Fluture
+[example-1]: https://github.com/Avaq/momi/tree/master/examples/readme
+[example-2]: https://github.com/Avaq/momi/tree/master/examples/express
+[example-3]: https://github.com/Avaq/momi/tree/master/examples/bootstrap
+[example-4]: https://github.com/Avaq/node-server-skeleton/tree/master/src/bootstrap

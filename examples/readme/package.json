@@ -8,8 +8,5 @@
   },
   "author": "",
   "license": "WTFPL",
-  "dependencies": {
-    "ramda": "^0.22.1",
-    "sanctuary": "^0.11.1"
-  }
+  "dependencies": {}
 }
