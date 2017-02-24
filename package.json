@@ -34,7 +34,7 @@
   "keywords": [],
   "dependencies": {
     "fantasy-states": "^0.2.1",
-    "fluture": "^4.0.3"
+    "fluture": "^5.0.0"
   },
   "devDependencies": {
     "chai": "^3.4.0",
