@@ -1,9 +1,10 @@
 'use strict';
 
-const {App, Middleware, Future} = require('../../');
+const {App, Middleware} = require('../../');
 const {getService, putService} = require('./util');
 const {merge} = require('ramda');
 const {log} = require('util');
+const Future = require('fluture');
 
 const K = x => _ => x;
 const B = (f, g) => x => f(g(x));

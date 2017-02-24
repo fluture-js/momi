@@ -1,10 +1,11 @@
 'use strict';
 
-const {App, Middleware, Future} = require('../../');
+const {App, Middleware} = require('../../');
 const {prop, assoc} = require('ramda');
 const {getService, putService} = require('./util');
 const createError = require('http-errors');
 const qs = require('querystring');
+const Future = require('fluture');
 
 const REQ = Middleware.get.map(prop('req'));
 const QUERY = Middleware.get.map(prop('query'));
@@ -12,7 +13,7 @@ const error = (code, message) => Middleware.lift(Future.reject(createError(code,
 
 const No = x => ({ok: false, value: x});
 const Yes = x => ({ok: true, value: x});
-const attempt = App.liftf(Future.fold(No, Yes));
+const attempt = Middleware.hoist(Future.fold(No, Yes));
 
 const errorToResponse = e => ({
   status: e.status || 500,
