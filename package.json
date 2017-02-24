@@ -11,7 +11,7 @@
     "lint:fix": "eslint --fix lib test index.js examples/*/*.js",
     "post-merge": "npm install && npm dedupe && npm run check-security && npm outdated --long",
     "pre-push": "npm run lint && npm run test:unit",
-    "release": "xyz --edit --tag 'X.Y.Z' --increment",
+    "release": "npm outdated --long && xyz --edit --repo git@github.com:Avaq/momi.git --tag 'X.Y.Z' --increment",
     "setup": "npm run post-merge && cp scripts/hooks/* .git/hooks && git config push.followTags true",
     "test": "npm run test:all && codecov",
     "test:all": "npm run lint && npm run test:unit && npm run test:coverage",
@@ -46,6 +46,6 @@
     "mocha": "^3.1.2",
     "nsp": "^2.2.0",
     "rimraf": "^2.4.3",
-    "xyz": "^1.1.0"
+    "xyz": "^2.1.0"
   }
 }
