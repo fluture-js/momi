@@ -1,6 +1,6 @@
 {
   "name": "momi",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "Monadic middleware",
   "main": "index.js",
   "repository": "https://github.com/Avaq/momi.git",
