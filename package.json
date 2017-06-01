@@ -37,8 +37,8 @@
     "fluture": "^6.1.1"
   },
   "devDependencies": {
-    "chai": "^3.4.0",
-    "codecov": "^1.0.1",
+    "chai": "^4.0.1",
+    "codecov": "^2.2.0",
     "eslint": "^3.10.2",
     "eslint-config-warp": "^1.2.0",
     "istanbul": "^0.4.2",
