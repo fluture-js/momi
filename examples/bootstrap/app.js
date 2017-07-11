@@ -55,16 +55,20 @@ module.exports = App.empty()
 //-> Middleware {req: Request, services: Services} Error ResponseSpecification
 .use(App.do(function*() {
   const query = yield QUERY;
+
   if(!query.id) {
     yield error(400, 'Missing "id" parameter');
   }
+
   const connection = yield getService('connection');
   const users = yield Middleware.lift(Future.node(done =>
     connection.query('SELECT * FROM users WHERE id = ?', [query.id], done)
   ));
   const user = users[0];
+
   if(!user) {
     yield error(404, 'User not found');
   }
+
   return {status: 200, body: JSON.stringify(user), headers: []};
 }));

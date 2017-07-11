@@ -9,8 +9,10 @@ exports.putService = (x, service) => Middleware.modify(evolve({services: assoc(x
 //      getService :: String -> Middleware {services: Services} b Any
 exports.getService = x => Middleware.get.map(state => {
   const service = state.services[x];
+
   if(!service) {
     throw new Error(`The ${x} service has not been registerred`);
   }
+
   return service;
 });

@@ -1,6 +1,9 @@
 'use strict';
 
-const App = require('./lib/app');
-const Middleware = require('./lib/middleware');
+var App = require('./lib/app');
+var Middleware = require('./lib/middleware');
 
-module.exports = {App, Middleware};
+module.exports = {
+  App: App,
+  Middleware: Middleware
+};

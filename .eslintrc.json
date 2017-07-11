@@ -1,8 +1,5 @@
 {
-  "extends": ["warp/node", "warp/es6"],
-  "parserOptions": {
-    "sourceType": "script"
-  },
+  "extends": ["warp/node"],
   "rules": {
     "newline-before-return": 0,
     "strict": [2, "global"],
@@ -10,6 +7,7 @@
     "indent": [2, 2, {
       "MemberExpression": 0,
       "SwitchCase": 1
-    }]
+    }],
+    "padding-line-between-statements": 0
   }
 }
