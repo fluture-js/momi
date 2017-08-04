@@ -1,29 +1,7 @@
-# Numerous always-ignore extensions
-*.diff
-*.err
-*.orig
-*.log
-*.rej
-*.swo
-*.swp
-*.vi
-*~
-
-# OS or Editor files
-.DS_Store
-.cache
-.project
-.settings
-.tmproj
-nbproject
-Thumbs.db
-.idea/
-
-# NPM packages folder
+.nyc_output/
+coverage/
 node_modules/
 
-# Code coverage report
-coverage/
+*.log
 
-# Test file - who doesn't have a test file?
-test*.js
+coverage.lcov

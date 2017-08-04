@@ -5,18 +5,12 @@
   "main": "index.js",
   "repository": "https://github.com/Avaq/momi.git",
   "scripts": {
-    "check-security": "nsp check",
-    "clean": "rimraf npm-debug.log coverage",
-    "lint": "eslint lib test index.js examples/*/*.js",
-    "lint:fix": "eslint --fix lib test index.js examples/*/*.js",
-    "post-merge": "npm install && npm dedupe && npm run check-security && npm outdated --long",
-    "pre-push": "npm run lint && npm run test:unit",
+    "clean": "rimraf npm-debug.log .nyc_output coverage.lcov",
+    "lint": "eslint index.js test",
     "release": "npm outdated --long && xyz --edit --repo git@github.com:Avaq/momi.git --tag 'X.Y.Z' --increment",
-    "setup": "npm run post-merge && cp scripts/hooks/* .git/hooks && git config push.followTags true",
-    "test": "npm run test:all && codecov",
-    "test:all": "npm run lint && npm run test:unit && npm run test:coverage",
-    "test:unit": "node ./node_modules/.bin/_mocha --ui bdd --reporter list --check-leaks --full-trace test/**.test.js",
-    "test:coverage": "npm run clean && node node_modules/.bin/istanbul cover --report html ./node_modules/.bin/_mocha -- --ui bdd --reporter dot --bail test/**.test.js"
+    "test": "npm run lint && npm run test:unit",
+    "test:unit": "nyc mocha --ui bdd --reporter list --check-leaks --full-trace test/**.test.js",
+    "test:coverage": "nyc report --reporter=text-lcov > coverage.lcov && codecov"
   },
   "author": "Aldwin Vlasblom <aldwin.vlasblom@gmail.com> (https://github.com/Avaq)",
   "homepage": "https://github.com/Avaq/momi",
@@ -34,18 +28,17 @@
   "keywords": [],
   "dependencies": {
     "fantasy-states": "^0.2.1",
-    "fluture": "^6.1.1"
+    "fluture": "^6.3.0"
   },
   "devDependencies": {
     "chai": "^4.0.1",
     "codecov": "^2.2.0",
-    "eslint": "^4.2.0",
+    "eslint": "^4.1.1",
     "eslint-config-warp": "^2.0.0",
-    "istanbul": "^0.4.2",
-    "jsverify": "^0.8.2",
-    "mocha": "^3.1.2",
-    "nsp": "^2.2.0",
-    "rimraf": "^2.4.3",
+    "fantasy-land": "^3.2.0",
+    "mocha": "^3.4.1",
+    "nyc": "^11.0.1",
+    "rimraf": "^2.6.1",
     "xyz": "^2.1.0"
   }
 }
