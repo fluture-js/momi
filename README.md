@@ -2,7 +2,7 @@
 
 **Mo**nadic **Mi**ddleware
 
-> npm install fantasy-states fluture momi
+> `npm install --save fantasy-states fluture momi`
 
 Middleware - specifically in the case of Connect, Express and Koa - is a
 mechanism which encodes several effects:
