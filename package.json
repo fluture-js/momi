@@ -33,13 +33,13 @@
   "devDependencies": {
     "chai": "^4.0.1",
     "codecov": "^3.0.0",
-    "eslint": "^4.1.1",
-    "eslint-config-warp": "^2.0.0",
+    "eslint": "^5.1.0",
+    "eslint-config-warp": "^3.0.0",
     "fantasy-land": "^3.2.0",
     "fantasy-states": "^0.2.1",
     "fluture": "^8.0.1",
     "mocha": "^5.0.0",
-    "nyc": "^11.0.1",
+    "nyc": "^12.0.2",
     "rimraf": "^2.6.1",
     "xyz": "^3.0.0"
   }
