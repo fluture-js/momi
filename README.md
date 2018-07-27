@@ -1,5 +1,7 @@
 # momi
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/Avaq/momi.svg)](https://greenkeeper.io/)
+
 **Mo**nadic **Mi**ddleware
 
 > `npm install --save fantasy-states fluture momi`

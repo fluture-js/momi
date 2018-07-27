@@ -1,0 +1,12 @@
+{
+  "groups": {
+    "default": {
+      "packages": [
+        "examples/bootstrap/package.json",
+        "examples/express/package.json",
+        "examples/readme/package.json",
+        "package.json"
+      ]
+    }
+  }
+}
