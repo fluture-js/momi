@@ -1,6 +1,8 @@
 /* eslint no-console:0 */
 
-import {App} from '../../';
+import {run} from '../../';
+import R from 'ramda';
+
 import {
   serviceBootstrapper,
   configurationBootstrapper,
@@ -9,14 +11,15 @@ import {
   resolveOnSigintBootstrapper
 } from './bootstrappers.mjs';
 
-const bootstrap = App.empty()
-.use(serviceBootstrapper)
-.use(configurationBootstrapper)
-.use(databasePoolBootstrapper)
-.use(httpServerBootstrapper)
-.use(resolveOnSigintBootstrapper);
+const bootstrap = R.compose(
+  serviceBootstrapper,
+  configurationBootstrapper,
+  databasePoolBootstrapper,
+  httpServerBootstrapper,
+  resolveOnSigintBootstrapper
+);
 
-App.run(bootstrap, null).fork(
+run(bootstrap, null).fork(
   e => {
     console.error('Process failed to bootstrap');
     console.error(e.stack);

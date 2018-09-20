@@ -10,8 +10,9 @@ export default {
     interop: false,
     globals: {
       'http': 'http',
-      'fantasy-states': 'State',
-      'fluture': 'Fluture'
+      'fluture': 'Fluture',
+      'sanctuary-type-classes': 'sanctuaryTypeClasses',
+      'monastic': 'Monastic'
     }
   }
 };

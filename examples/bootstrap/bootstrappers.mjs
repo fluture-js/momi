@@ -1,5 +1,6 @@
-import {App, Middleware} from '../../';
+import {go, put, lift, modify, mount, get} from '../../';
 import {getService, putService} from './util';
+import Z from 'sanctuary-type-classes';
 import R from 'ramda';
 import {log} from 'util';
 import Future from 'fluture';
@@ -16,8 +17,8 @@ const Services = () => ({});
 
 // This bootstrapper prepares the state to be used by the functions in ./util.
 //      serviceBootstrapper :: Middleware a b c -> Middleware {services: Services} b c
-export const serviceBootstrapper = App.do(function*(next) {
-  yield Middleware.put({services: Services()});
+export const serviceBootstrapper = go(function*(next) {
+  yield put({services: Services()});
   return yield next;
 });
 
@@ -25,7 +26,7 @@ export const serviceBootstrapper = App.do(function*(next) {
 // settings.
 //      configurationBootstrapper :: Middleware {services: Services} b c
 //                                -> Middleware {services: Services} Error c
-export const configurationBootstrapper = App.do(function*(next) {
+export const configurationBootstrapper = go(function*(next) {
   yield putService('config', prop => Future.try(_ => config.get(prop)));
   return yield next;
 });
@@ -33,16 +34,16 @@ export const configurationBootstrapper = App.do(function*(next) {
 // This bootstrapper sets up a mysqlPool for the duration of the app life.
 //      databasePoolBootstrapper :: Middleware {services: Services} Error c
 //                               -> Middleware {services: Services} Error c
-export const databasePoolBootstrapper = App.do(function*(next) {
+export const databasePoolBootstrapper = go(function*(next) {
   log('Creating mysql pool');
   const config = yield getService('config');
-  const settings = yield Middleware.lift(config('mysql'));
+  const settings = yield lift(config('mysql'));
   const pool = mysql.createPool(settings);
   yield putService('mysqlPool', pool);
   log('Created mysql pool');
   const res = yield next;
   log('Closing mysql pool');
-  yield Middleware.lift(Future.node(done => pool.end(done)));
+  yield lift(Future.node(done => pool.end(done)));
   log('Closed mysql pool');
   return res;
 });
@@ -52,15 +53,16 @@ export const databasePoolBootstrapper = App.do(function*(next) {
 // for this app over to the app loaded from ./app.
 //      httpServerBootstrapper :: Middleware {services: Services} Error c
 //                             -> Middleware {services: Services} Error c
-export const httpServerBootstrapper = App.do(function*(next) {
+export const httpServerBootstrapper = go(function*(next) {
   log('Connecting HTTP server');
-  const state = yield Middleware.get;
-  const mergeState = next => Middleware.modify(
-    req => R.merge(state, {req})).chain(K(next)
+  const state = yield get;
+  const mergeState = next => Z.chain(
+    K(next),
+    modify(req => R.merge(state, {req}))
   );
   const app = B(mergeState, myApp);
   const connections = new Set();
-  const server = App.mount(app, 3000);
+  const server = mount(app, 3000);
   server.on('connection', connection => {
     connection.once('close', _ => connections.delete(connection));
     connections.add(connection);
@@ -68,7 +70,7 @@ export const httpServerBootstrapper = App.do(function*(next) {
   log('Connected HTTP server');
   const res = yield next;
   log('Disconnecting HTTP server');
-  yield Middleware.lift(Future.node(done => {
+  yield lift(Future.node(done => {
     connections.forEach(connection => connection.destroy());
     server.close(done);
   }));
@@ -80,4 +82,4 @@ export const httpServerBootstrapper = App.do(function*(next) {
 //      resolveOnSigintBootstrapper :: Middleware {services: Services} Error c
 //                                  -> Middleware {services: Services} Error ()
 export const resolveOnSigintBootstrapper = _ =>
-  Middleware.lift(Future((rej, res) => void process.once('SIGINT', res)));
+  lift(Future((rej, res) => void process.once('SIGINT', res)));

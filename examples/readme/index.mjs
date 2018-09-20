@@ -1,21 +1,26 @@
-import {App, Middleware} from '../../';
+import Z from 'sanctuary-type-classes';
+import {compose, constant} from 'monastic';
+
 import qs from 'querystring';
 
-const queryParseMiddleware = App.do(function*(next) {
-  const req = yield Middleware.get;
+import {go, mount, get, put} from '../../';
+
+const queryParseMiddleware = go(function*(next) {
+  const req = yield get;
   const query = qs.parse(req.url.split('?')[1]);
-  yield Middleware.put(Object.assign({query}, req));
+  yield put(Object.assign({query}, req));
   return yield next;
 });
 
-const echoMiddleware = Middleware.get.map(req => ({
+const echoMiddleware = Z.map(req => ({
   status: 200,
   headers: {'X-Powered-By': 'momi'},
   body: req.query.echo
-}));
+}), get);
 
-const app = App.empty()
-.use(queryParseMiddleware)
-.use(_ => echoMiddleware);
+const app = compose(
+  queryParseMiddleware,
+  constant(echoMiddleware)
+);
 
-App.mount(app, 3000);
+mount(app, 3000);

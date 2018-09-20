@@ -1,13 +1,14 @@
-import {Middleware} from '../../';
+import {modify, get} from '../../';
 import R from 'ramda';
+import Z from 'sanctuary-type-classes';
 
 //      putService :: String -> Any -> Middleware {services: Services} b ()
-export const putService = (x, service) => Middleware.modify(
+export const putService = (x, service) => modify(
   R.evolve({services: R.assoc(x, service)})
 );
 
 //      getService :: String -> Middleware {services: Services} b Any
-export const getService = x => Middleware.get.map(state => {
+export const getService = x => Z.map(state => {
   const service = state.services[x];
 
   if (!service) {
@@ -15,4 +16,4 @@ export const getService = x => Middleware.get.map(state => {
   }
 
   return service;
-});
+}, get);
