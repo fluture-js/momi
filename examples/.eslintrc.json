@@ -1,3 +1,18 @@
 {
-  "extends": ["warp/es6"]
+  "extends": ["warp/es6", "warp/module"],
+  "parserOptions": {
+    "ecmaVersion": 2015,
+    "sourceType": "module"
+  },
+  "overrides": [
+    {
+      "files": ["bootstrap/*.mjs"],
+      "env": {
+        "node": true
+      }
+    }
+  ],
+  "rules": {
+    "func-style": [2, "expression", { "allowArrowFunctions": true }]
+  }
 }

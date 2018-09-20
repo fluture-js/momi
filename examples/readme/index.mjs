@@ -1,7 +1,5 @@
-'use strict';
-
-const {App, Middleware} = require('../../');
-const qs = require('querystring');
+import {App, Middleware} from '../../';
+import qs from 'querystring';
 
 const queryParseMiddleware = App.do(function*(next) {
   const req = yield Middleware.get;
@@ -10,7 +8,7 @@ const queryParseMiddleware = App.do(function*(next) {
   return yield next;
 });
 
-const echoMiddleware = _ => Middleware.get.map(req => ({
+const echoMiddleware = Middleware.get.map(req => ({
   status: 200,
   headers: {'X-Powered-By': 'momi'},
   body: req.query.echo
@@ -18,6 +16,6 @@ const echoMiddleware = _ => Middleware.get.map(req => ({
 
 const app = App.empty()
 .use(queryParseMiddleware)
-.use(echoMiddleware);
+.use(_ => echoMiddleware);
 
 App.mount(app, 3000);

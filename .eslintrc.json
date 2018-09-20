@@ -1,13 +1,16 @@
 {
-  "extends": ["warp/node"],
-  "rules": {
-    "newline-before-return": 0,
-    "strict": [2, "global"],
-    "prefer-rest-params": 0,
-    "indent": [2, 2, {
-      "MemberExpression": 0,
-      "SwitchCase": 1
-    }],
-    "padding-line-between-statements": 0
-  }
+  "extends": ["./node_modules/sanctuary-style/eslint-es3.json"],
+  "root": true,
+  "parserOptions": {
+    "sourceType": "module",
+    "ecmaVersion": 3
+  },
+  "overrides": [
+    {
+      "files": ["test/**/*.js"],
+      "env": {
+        "mocha": true
+      }
+    }
+  ]
 }
