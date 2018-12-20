@@ -9,7 +9,7 @@
   "license": "WTFPL",
   "description": "",
   "dependencies": {
-    "config": "^2.0.2",
+    "config": "^3.0.1",
     "fluture": "^10.1.1",
     "http-errors": "^1.5.1",
     "mysql": "^2.12.0",
