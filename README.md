@@ -4,7 +4,7 @@
 
 **Mo**nadic **Mi**ddleware
 
-> `npm install --save fantasy-states fluture momi`
+> `npm install --save monastic fluture momi`
 
 Middleware - specifically in the case of Connect, Express and Koa - is a
 mechanism which encodes several effects:
@@ -24,7 +24,7 @@ use a `StateT(Future) -> StateT(Future)` structure:
 
 In other words, the `StateT(Future)`-structure might be considered the
 Middleware monad. This packages exposes the Middleware monad, comprised of
-`State` from [fantasy-states][] and `Future` from [Fluture][]. Besides the
+`State` from [monastic][] and `Future` from [Fluture][]. Besides the
 monad itself, it also exposes some utility functions and structures for
 practically applying Middleware. One such utility is the `App` class,
 which allows composition of functions over Middleware to be written more like
@@ -33,27 +33,32 @@ what you are used to from middleware as it comes with Connect, Express or Koa.
 ## Usage
 
 ```js
-const {App, Middleware} = require('momi');
-const qs = require('querystring');
+import Z from 'sanctuary-type-classes';
+import {compose, constant} from 'monastic';
 
-const queryParseMiddleware = App.do(function*(next) {
-  const req = yield Middleware.get;
+import qs from 'querystring';
+
+import {go, mount, get, put} from '../../';
+
+const queryParseMiddleware = go(function*(next) {
+  const req = yield get;
   const query = qs.parse(req.url.split('?')[1]);
-  yield Middleware.put(Object.assign({query}, req));
+  yield put(Object.assign({query}, req));
   return yield next;
 });
 
-const echoMiddleware = _ => Middleware.get.map(req => ({
+const echoMiddleware = Z.map(req => ({
   status: 200,
   headers: {'X-Powered-By': 'momi'},
   body: req.query.echo
-}));
+}), get);
 
-const app = App.empty()
-.use(queryParseMiddleware)
-.use(echoMiddleware);
+const app = compose(
+  queryParseMiddleware,
+  constant(echoMiddleware)
+);
 
-App.mount(app, 3000);
+mount(app, 3000);
 ```
 
 ## Examples
@@ -63,7 +68,7 @@ App.mount(app, 3000);
 - **[Bootstrap][example-3]** an extensive example showing application structure.
 - **[Real World][example-4]** how momi is being used in real life.
 
-[fantasy-states]: https://github.com/fantasyland/fantasy-states
+[monastic]: https://github.com/wearereasonablepeople/monastic
 [Fluture]: https://github.com/Avaq/Fluture
 [example-1]: https://github.com/Avaq/momi/tree/master/examples/readme
 [example-2]: https://github.com/Avaq/momi/tree/master/examples/express

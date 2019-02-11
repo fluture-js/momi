@@ -2,15 +2,17 @@
   "name": "momi",
   "version": "0.7.2",
   "description": "Monadic middleware",
-  "main": "index.js",
+  "main": "index",
+  "module": "index.mjs",
   "repository": "https://github.com/Avaq/momi.git",
   "scripts": {
     "clean": "rimraf npm-debug.log .nyc_output coverage.lcov",
-    "lint": "eslint index.js test",
+    "lint": "eslint index.mjs test index.mjs examples/**/*.mjs",
     "release": "npm outdated --long && xyz --edit --repo git@github.com:Avaq/momi.git --tag 'X.Y.Z' --increment",
     "test": "npm run lint && npm run test:unit",
-    "test:unit": "nyc mocha --ui bdd --reporter list --check-leaks --full-trace test/**.test.js",
-    "test:coverage": "nyc report --reporter=text-lcov > coverage.lcov && codecov"
+    "test:unit": "nyc --extension .mjs --reporter=text mocha test/**.test.js",
+    "test:coverage": "nyc report --extension .mjs --reporter=text-lcov > coverage.lcov && codecov",
+    "prepublishOnly": "rollup -c rollup.config.mjs"
   },
   "author": "Aldwin Vlasblom <aldwin.vlasblom@gmail.com> (https://github.com/Avaq)",
   "homepage": "https://github.com/Avaq/momi",
@@ -22,25 +24,30 @@
     "node": ">=6.0.0"
   },
   "files": [
-    "index.js",
-    "lib"
+    "index.mjs",
+    "index.js"
   ],
   "keywords": [],
-  "peerDependencies": {
-    "fantasy-states": "0.2.x",
-    "fluture": "<11.0.0"
+  "dependencies": {
+    "sanctuary-type-classes": "^9.0.0"
   },
   "devDependencies": {
     "chai": "^4.0.1",
     "codecov": "^3.0.0",
     "eslint": "^5.1.0",
     "eslint-config-warp": "^3.0.0",
-    "fantasy-land": "^3.2.0",
-    "fantasy-states": "^0.2.1",
-    "fluture": "^10.1.1",
+    "esm": "^3.0.84",
     "mocha": "^5.0.0",
+    "monastic": "^1.0.1",
     "nyc": "^13.1.0",
     "rimraf": "^2.6.1",
+    "fluture": "^10.1.1",
+    "rollup": "^0.66.1",
+    "sanctuary-style": "^2.0.0",
     "xyz": "^3.0.0"
+  },
+  "peerDependencies": {
+    "fluture": "<11.0.0",
+    "monastic": "^1.0.1"
   }
 }

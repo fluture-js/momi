@@ -5,3 +5,7 @@ node_modules/
 *.log
 
 coverage.lcov
+
+package-lock.json
+
+/index.js
