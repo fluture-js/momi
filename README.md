@@ -34,11 +34,10 @@ what you are used to from middleware as it comes with Connect, Express or Koa.
 
 ```js
 import Z from 'sanctuary-type-classes';
-import {compose, constant} from 'monastic';
-
 import qs from 'querystring';
 
-import {go, mount, get, put} from '../../';
+import {compose, constant} from 'monastic';
+import {go, mount, get, put} from 'momi';
 
 const queryParseMiddleware = go(function*(next) {
   const req = yield get;
