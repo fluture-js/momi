@@ -11,6 +11,6 @@
   "dependencies": {
     "fluture": "^10.1.1",
     "monastic": "^1.0.1",
-    "sanctuary-type-classes": "^9.0.0"
+    "sanctuary-type-classes": "^10.0.0"
   }
 }
