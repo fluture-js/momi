@@ -43,7 +43,7 @@
     "rimraf": "^2.6.1",
     "fluture": "^10.1.1",
     "rollup": "^1.2.0",
-    "sanctuary-style": "^2.0.0",
+    "sanctuary-style": "^3.0.0",
     "xyz": "^3.0.0"
   },
   "peerDependencies": {
