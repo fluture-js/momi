@@ -29,7 +29,7 @@
   ],
   "keywords": [],
   "dependencies": {
-    "sanctuary-type-classes": "^10.0.0"
+    "sanctuary-type-classes": "^11.0.0"
   },
   "devDependencies": {
     "chai": "^4.0.1",
