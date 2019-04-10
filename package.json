@@ -42,7 +42,7 @@
     "nyc": "^13.1.0",
     "rimraf": "^2.6.1",
     "fluture": "^11.0.0",
-    "rollup": "^1.2.0",
+    "rollup": "1.9.2",
     "sanctuary-style": "^3.0.0",
     "xyz": "^3.0.0"
   },
