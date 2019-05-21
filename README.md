@@ -1,6 +1,6 @@
 # momi
 
-[![Greenkeeper badge](https://badges.greenkeeper.io/Avaq/momi.svg)](https://greenkeeper.io/)
+[![Greenkeeper badge](https://badges.greenkeeper.io/fluture-js/momi.svg)](https://greenkeeper.io/)
 
 **Mo**nadic **Mi**ddleware
 
@@ -68,8 +68,8 @@ mount(app, 3000);
 - **[Real World][example-4]** how momi is being used in real life.
 
 [monastic]: https://github.com/wearereasonablepeople/monastic
-[Fluture]: https://github.com/Avaq/Fluture
-[example-1]: https://github.com/Avaq/momi/tree/master/examples/readme
-[example-2]: https://github.com/Avaq/momi/tree/master/examples/express
-[example-3]: https://github.com/Avaq/momi/tree/master/examples/bootstrap
+[Fluture]: https://github.com/fluture-js/Fluture
+[example-1]: https://github.com/fluture-js/momi/tree/master/examples/readme
+[example-2]: https://github.com/fluture-js/momi/tree/master/examples/express
+[example-3]: https://github.com/fluture-js/momi/tree/master/examples/bootstrap
 [example-4]: https://github.com/Avaq/node-server-skeleton/tree/master/src/bootstrap

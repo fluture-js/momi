@@ -4,20 +4,20 @@
   "description": "Monadic middleware",
   "main": "index",
   "module": "index.mjs",
-  "repository": "https://github.com/Avaq/momi.git",
+  "repository": "https://github.com/fluture-js/momi.git",
   "scripts": {
     "clean": "rimraf npm-debug.log .nyc_output coverage.lcov",
     "lint": "eslint index.mjs test index.mjs examples/**/*.mjs",
-    "release": "npm outdated --long && xyz --edit --repo git@github.com:Avaq/momi.git --tag 'X.Y.Z' --increment",
+    "release": "npm outdated --long && xyz --edit --repo git@github.com:fluture-js/momi.git --tag 'X.Y.Z' --increment",
     "test": "npm run lint && npm run test:unit",
     "test:unit": "nyc --extension .mjs --reporter=text mocha test/**.test.js",
     "test:coverage": "nyc report --extension .mjs --reporter=text-lcov > coverage.lcov && codecov",
     "prepublishOnly": "rollup -c rollup.config.mjs"
   },
   "author": "Aldwin Vlasblom <aldwin.vlasblom@gmail.com> (https://github.com/Avaq)",
-  "homepage": "https://github.com/Avaq/momi",
+  "homepage": "https://github.com/fluture-js/momi",
   "bugs": {
-    "url": "https://github.com/Avaq/momi/issues"
+    "url": "https://github.com/fluture-js/momi/issues"
   },
   "license": "MIT",
   "engines": {
