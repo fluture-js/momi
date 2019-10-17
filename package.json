@@ -1,0 +1,38 @@
+{
+  "name": "fluture-project",
+  "version": "0.0.0",
+  "description": "Hopefully something related to Fluture",
+  "type": "module",
+  "main": "index.cjs",
+  "module": "index.js",
+  "scripts": {
+    "build": "rollup -c rollup.config.js",
+    "codecov": "codecov",
+    "doctest": "sanctuary-doctest",
+    "lint": "sanctuary-lint",
+    "release": "sanctuary-release",
+    "test": "npm run lint && sanctuary-test && npm run doctest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/fluture-js/fluture-project.git"
+  },
+  "files": [
+    "/index.cjs",
+    "/index.js",
+    "/LICENSE",
+    "/package.json",
+    "/README.md"
+  ],
+  "author": "Aldwin Vlasblom <aldwin@avaq.it> (https://github.com/Avaq)",
+  "license": "MIT",
+  "dependencies": {},
+  "peerDependencies": {},
+  "devDependencies": {
+    "c8": "^5.0.4",
+    "codecov": "^3.2.0",
+    "oletus": "^2.0.0",
+    "rollup": "^1.21.4",
+    "sanctuary-scripts": "^3.1.1"
+  }
+}

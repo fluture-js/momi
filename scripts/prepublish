@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+set -eufo pipefail
+
+echo "Publishing as $(npm whoami)."
+
+if ! npm outdated --long; then
+  read -rp "Continue? [y/N] " choice
+  if [[ "${choice-n}" != 'y' ]]; then
+    echo 'Package distribution aborted.'
+    exit 2
+  fi
+fi
+
+npm run build
+
+sanctuary-prepublish "$@"
