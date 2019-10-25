@@ -141,17 +141,14 @@ suite ('Momi', function() {
   });
 
   test ('.go', function() {
-    var app = compose (
-      go (function*(next) {
-        yield modify (mul3);
-        return yield next;
-      }),
-      go (function*(next) {
-        yield next;
-        yield modify (eq (6));
-        return 42;
-      })
-    );
+    var app = compose (go (function*(next) {
+      yield modify (mul3);
+      return yield next;
+    })) (go (function*(next) {
+      yield next;
+      yield modify (eq (6));
+      return 42;
+    }));
     return assertResolved (run (app, 2), 42);
   });
 
