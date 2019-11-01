@@ -1,0 +1,12 @@
+{
+  "root": true,
+  "extends": ["./node_modules/sanctuary-style/eslint-es3.json"],
+  "parserOptions": {"sourceType": "module"},
+  "env": {"node": true, "es6": true},
+  "overrides": [
+    {
+      "files": ["README.md"],
+      "rules": {"no-undef": ["off"]}
+    }
+  ]
+}
