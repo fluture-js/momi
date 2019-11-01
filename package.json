@@ -44,7 +44,7 @@
     "rimraf": "^3.0.0",
     "rollup": "^1.2.0",
     "sanctuary-style": "^3.0.0",
-    "xyz": "^3.0.0"
+    "xyz": "^4.0.0"
   },
   "peerDependencies": {
     "fluture": "<12.0.0",
