@@ -26,6 +26,12 @@ This pull request adds everything the project needs to be at its first release.
     - Change `umd` to `cjs` in `rollup.config.js` and remove `output.name`.
     - Change `eslint-es3` to `eslint-es6` in `.eslintrc.json`.
 
+- [ ] Set up integration with Codecov:
+    - Find the Codecov token in the Codecov settings for your new repository:
+      https://codecov.io/gh/{owner}/{repository}/settings
+    - Save it as `CODECOV_TOKEN` in the secrets for your new repository:
+      https://github.com/{owner}/{repository}/settings/secrets
+
 - [ ] Remove the `initial-pr.md` pull-request template.
 
 - [ ] Write the code.
