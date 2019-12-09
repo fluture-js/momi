@@ -47,7 +47,7 @@
     "xyz": "^4.0.0"
   },
   "peerDependencies": {
-    "fluture": "<12.0.0",
+    "fluture": "12.0.2",
     "monastic": "^1.0.1"
   }
 }
