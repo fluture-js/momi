@@ -9,7 +9,7 @@
   "license": "WTFPL",
   "description": "",
   "dependencies": {
-    "config": "^3.0.1",
+    "config": "^3.2.6",
     "fluture": "^11.0.0",
     "http-errors": "^1.5.1",
     "monastic": "^1.0.1",
