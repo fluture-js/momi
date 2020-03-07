@@ -2,6 +2,7 @@
   "name": "fluture-project",
   "version": "0.0.0",
   "description": "Hopefully something related to Fluture",
+  "tags": ["fluture"],
   "type": "module",
   "main": "index.cjs",
   "module": "index.js",

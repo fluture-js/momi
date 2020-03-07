@@ -21,6 +21,7 @@ This pull request adds everything the project needs to be at its first release.
     - Change `description` in `package.json`
     - Update the GitHub repo description.
     - Add the description to the documentation in `index.js`.
+    - Add additional `tags` in `package.json`.
 
 - [ ] If this is a node-only module, remove browser support:
     - Change `umd` to `cjs` in `rollup.config.js` and remove `output.name`.
