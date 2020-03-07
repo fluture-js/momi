@@ -25,6 +25,7 @@ This pull request adds everything the project needs to be at its first release.
 - [ ] If this is a node-only module, remove browser support:
     - Change `umd` to `cjs` in `rollup.config.js` and remove `output.name`.
     - Change `eslint-es3` to `eslint-es6` in `.eslintrc.json`.
+    - Change `shared-node-browser` to `node` in `.eslintrc.json`.
 
 - [ ] Set up integration with Codecov:
     - Find the Codecov token in the Codecov settings for your new repository:
