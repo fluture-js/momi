@@ -1,0 +1,27 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches:
+      - master
+
+jobs:
+  test:
+    name: Automated Tests
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v1
+    - name: Install NodeJS
+      uses: actions/setup-node@v1
+      with:
+        node-version: 12.x
+    - name: Install Dependencies
+      run: npm install
+    - name: Execute Tests
+      run: npm test
+    - name: Upload Coverage Report
+      run: npm run codecov
+      env:
+        CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
