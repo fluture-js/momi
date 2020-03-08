@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+set -eufo pipefail
+
+# shellcheck source=../node_modules/sanctuary-scripts/functions
+source "${BASH_SOURCE%/*}/../node_modules/sanctuary-scripts/functions"
+
+branches="$(get min-branch-coverage)"
+
+c8 --check-coverage \
+   --branches "$branches" \
+   --reporter lcov \
+   node --experimental-modules \
+        --no-warnings \
+        ./node_modules/.bin/oletus

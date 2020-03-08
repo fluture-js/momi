@@ -1,5 +1,0 @@
---bail
---require esm
---ui tdd
---check-leaks
---full-trace
