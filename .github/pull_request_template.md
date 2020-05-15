@@ -34,6 +34,6 @@ This pull request adds everything the project needs to be at its first release.
     - Save it as `CODECOV_TOKEN` in the secrets for your new repository:
       https://github.com/{owner}/{repository}/settings/secrets.
 
-- [ ] Remove the `initial-pr.md` pull-request template.
+- [ ] Remove or update `.github/pull_request_template.md`.
 
 - [ ] Write the code.
