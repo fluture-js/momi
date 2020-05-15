@@ -9,6 +9,4 @@ branches="$(get min-branch-coverage)"
 c8 --check-coverage \
    --branches "$branches" \
    --reporter lcov \
-   node --experimental-modules \
-        --no-warnings \
-        ./node_modules/.bin/oletus
+   oletus
