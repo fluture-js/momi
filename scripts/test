@@ -9,4 +9,5 @@ branches="$(get min-branch-coverage)"
 c8 --check-coverage \
    --branches "$branches" \
    --reporter lcov \
+   --reporter text \
    oletus
