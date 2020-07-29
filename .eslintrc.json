@@ -2,7 +2,7 @@
   "root": true,
   "extends": ["./node_modules/sanctuary-style/eslint-es6.json"],
   "parserOptions": {"sourceType": "module"},
-  "env": {"shared-node-browser": true, "es6": true},
+  "env": {"node": true, "es6": true},
   "overrides": [
     {
       "files": ["README.md"],
