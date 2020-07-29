@@ -36,7 +36,7 @@
 //. import Z from 'sanctuary-type-classes';
 //. import qs from 'querystring';
 //.
-//. import {compose, constant} from 'monastic';
+//. import {compose, constant} from 'monastic/index.js';
 //. import {go, mount, get, put} from 'momi';
 //.
 //. const queryParseMiddleware = go (function* (next) {
@@ -68,7 +68,7 @@
 //. - **[Real World][example-4]** how momi is being used in real life.
 
 import Future from 'fluture';
-import {StateT} from 'monastic/index.mjs';
+import {StateT} from 'monastic/index.js';
 import http from 'http';
 import Z from 'sanctuary-type-classes';
 
@@ -156,7 +156,7 @@ export function run(app, initial) {
   return evalState (initial) (app (Z.of (Middleware, null)));
 }
 
-//. [monastic]: https://github.com/wearereasonablepeople/monastic
+//. [monastic]: https://github.com/dicearr/monastic
 //. [Fluture]: https://github.com/fluture-js/Fluture
 //. [example-1]: https://github.com/fluture-js/momi/tree/master/examples/readme
 //. [example-2]: https://github.com/fluture-js/momi/tree/master/examples/express

@@ -1,6 +1,6 @@
 import Z from 'sanctuary-type-classes';
 import assert from 'assert';
-import {compose} from 'monastic/index.mjs';
+import {compose} from 'monastic/index.js';
 import test from 'oletus';
 
 import {
@@ -135,16 +135,7 @@ test ('.connect with an invalid middleware', () => {
 });
 
 test ('.go', () => {
-  const app = compose (
-    go (function* (next) {
-      yield modify (mul3);
-      return yield next;
-    }),
-    go (function* (next) {
-      yield next;
-      yield modify (eq (6));
-      return 42;
-    })
-  );
+  const app = compose (go (function* (next) { yield modify (mul3); return yield next; }))
+                      (go (function* (next) { yield next; yield modify (eq (6)); return 42; }));
   return assertResolved (run (app, 2), 42);
 });
