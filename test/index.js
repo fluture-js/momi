@@ -1,7 +1,9 @@
 import Z from 'sanctuary-type-classes';
 import assert from 'assert';
-import {compose} from 'monastic/index.mjs';
+import {compose} from 'monastic/index.js';
 import test from 'oletus';
+import {resolve, reject as rejectF} from 'fluture/index.js';
+import {equivalence} from 'fluture/test/assertions.js';
 
 import {
   reject,
@@ -12,54 +14,6 @@ import {
   run,
   modify,
 } from '../index.js';
-
-function isDeepStrictEqual(a, b) {
-  try {
-    assert.deepStrictEqual (a, b);
-    return true;
-  } catch (e) {
-    return false;
-  }
-}
-
-function assertion(expectedValue, actualValue, expectedBranch, actualBranch) {
-  return new assert.AssertionError ({
-    expected: expectedValue,
-    actual: actualValue,
-    message: (
-      `Expected the Future to ${expectedBranch} with ${expectedValue} ` +
-      `instead ${actualBranch} with ${actualValue}.`
-    ),
-  });
-}
-
-function assertRejected(m, x) {
-  return new Promise (((res, rej) => {
-    m.forkCatch (rej, y => {
-      if (isDeepStrictEqual (x, y)) {
-        res ();
-      } else {
-        rej (assertion (x, y, 'reject', 'reject'));
-      }
-    }, y => {
-      rej (assertion (x, y, 'reject', 'resolve'));
-    });
-  }));
-}
-
-function assertResolved(m, x) {
-  return new Promise (((res, rej) => {
-    m.forkCatch (rej, y => {
-      rej (assertion (x, y, 'resolve', 'reject'));
-    }, y => {
-      if (isDeepStrictEqual (x, y)) {
-        res ();
-      } else {
-        rej (assertion (x, y, 'resolve', 'resolve'));
-      }
-    });
-  }));
-}
 
 function eq(a) {
   return function(b) {
@@ -91,22 +45,24 @@ function response(spec, done) {
   };
 }
 
-test ('.run', () => assertResolved (run (middleware (42), 2), 42));
+test ('.run', () => equivalence (run (middleware (42), 2)) (resolve (42)));
 
-test ('.reject', () => assertRejected (evalState (null) (reject (42)), 42));
+test ('.reject', () => equivalence (evalState (null) (reject (42))) (rejectF (42)));
 
 test ('.fromComputation with a resolved future', () => {
   const actual = evalState (null) (fromComputation ((rej, res) => {
     res (42);
+    return () => null;
   }));
-  return assertResolved (actual, 42);
+  return equivalence (actual) (resolve (42));
 });
 
 test ('.fromComputation with a rejected future', () => {
   const actual = evalState (null) (fromComputation (rej => {
     rej (42);
+    return () => null;
   }));
-  return assertRejected (actual, 42);
+  return equivalence (actual) (rejectF (42));
 });
 
 test ('.connect with a resolution in the middleware', () => new Promise (((res, rej) => {
@@ -135,16 +91,7 @@ test ('.connect with an invalid middleware', () => {
 });
 
 test ('.go', () => {
-  const app = compose (
-    go (function* (next) {
-      yield modify (mul3);
-      return yield next;
-    }),
-    go (function* (next) {
-      yield next;
-      yield modify (eq (6));
-      return 42;
-    })
-  );
-  return assertResolved (run (app, 2), 42);
+  const app = compose (go (function* (next) { yield modify (mul3); return yield next; }))
+                      (go (function* (next) { yield next; yield modify (eq (6)); return 42; }));
+  return equivalence (run (app, 2)) (resolve (42));
 });

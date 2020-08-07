@@ -36,7 +36,7 @@
 //. import Z from 'sanctuary-type-classes';
 //. import qs from 'querystring';
 //.
-//. import {compose, constant} from 'monastic';
+//. import {compose, constant} from 'monastic/index.js';
 //. import {go, mount, get, put} from 'momi';
 //.
 //. const queryParseMiddleware = go (function* (next) {
@@ -67,8 +67,8 @@
 //. - **[Bootstrap][example-3]** an example showing application structure.
 //. - **[Real World][example-4]** how momi is being used in real life.
 
-import Future from 'fluture';
-import {StateT} from 'monastic/index.mjs';
+import {Future, fork, reject as rejectF} from 'fluture/index.js';
+import {StateT} from 'monastic/index.js';
 import http from 'http';
 import Z from 'sanctuary-type-classes';
 
@@ -76,7 +76,7 @@ export const Middleware = StateT (Future);
 
 // reject :: b -> Middleware a b c
 export function reject(x) {
-  return Middleware.lift (Future.reject (x));
+  return Middleware.lift (rejectF (x));
 }
 
 // fromComputation :: ((a -> (), b -> ()) -> () -> ()) -> Middleware s a b
@@ -137,18 +137,18 @@ export function connect(app) {
   const monad = evaluateApp (app);
 
   return function(req, res, next) {
-    return evalState (req) (monad)
-      .fork (next, val => mapValToRes (val, res));
+    return fork (next)
+                (val => mapValToRes (val, res))
+                (evalState (req) (monad));
   };
 }
 
 export function mount(app, port) {
   const monad = evaluateApp (app);
   return http.createServer ((req, res) => {
-    evalState (req) (monad).fork (
-      err => mapErrToRes (err, res),
-      val => mapValToRes (val, res)
-    );
+    fork (err => mapErrToRes (err, res))
+         (val => mapValToRes (val, res))
+         (evalState (req) (monad));
   }).listen (port);
 }
 
@@ -156,7 +156,7 @@ export function run(app, initial) {
   return evalState (initial) (app (Z.of (Middleware, null)));
 }
 
-//. [monastic]: https://github.com/wearereasonablepeople/monastic
+//. [monastic]: https://github.com/dicearr/monastic
 //. [Fluture]: https://github.com/fluture-js/Fluture
 //. [example-1]: https://github.com/fluture-js/momi/tree/master/examples/readme
 //. [example-2]: https://github.com/fluture-js/momi/tree/master/examples/express

@@ -1,9 +1,9 @@
 export default {
   input: 'index.js',
   external: [
-    'fluture',
+    'fluture/index.js',
     'http',
-    'monastic/index.mjs',
+    'monastic/index.js',
     'sanctuary-type-classes',
   ],
   output: {
@@ -12,11 +12,12 @@ export default {
     file: 'index.cjs',
     interop: false,
     paths: {
-      'monastic/index.mjs': 'monastic/index.js',
+      'monastic/index.js': 'monastic',
+      'fluture/index.js': 'fluture',
     },
     globals: {
       'fluture/index.js': 'Fluture',
-      'monastic/index.mjs': 'Monastic',
+      'monastic/index.js': 'monastic',
     },
   },
 };
