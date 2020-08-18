@@ -1,6 +1,6 @@
 import Z from 'sanctuary-type-classes';
 import assert from 'assert';
-import {compose} from 'monastic/index.js';
+import {compose} from 'monastic';
 import test from 'oletus';
 import {resolve, reject as rejectF} from 'fluture/index.js';
 import {equivalence} from 'fluture/test/assertions.js';

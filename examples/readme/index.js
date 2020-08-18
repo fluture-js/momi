@@ -1,5 +1,5 @@
 import Z from 'sanctuary-type-classes';
-import {compose, constant} from 'monastic/index.js';
+import {compose, constant} from 'monastic';
 
 import qs from 'querystring';
 
