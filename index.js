@@ -67,7 +67,7 @@
 //. - **[Bootstrap][example-3]** an example showing application structure.
 //. - **[Real World][example-4]** how momi is being used in real life.
 
-import {Future, fork, reject as rejectF} from 'fluture/index.js';
+import {Future, fork, reject as rejectF} from 'fluture';
 import {StateT} from 'monastic';
 import http from 'http';
 import Z from 'sanctuary-type-classes';

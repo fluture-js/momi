@@ -1,7 +1,7 @@
 export default {
   input: 'index.js',
   external: [
-    'fluture/index.js',
+    'fluture',
     'http',
     'monastic',
     'sanctuary-type-classes',
@@ -11,11 +11,5 @@ export default {
     name: 'momi',
     file: 'index.cjs',
     interop: false,
-    paths: {
-      'fluture/index.js': 'fluture',
-    },
-    globals: {
-      'fluture/index.js': 'Fluture',
-    },
   },
 };

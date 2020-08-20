@@ -3,7 +3,7 @@ import Z from 'sanctuary-type-classes';
 import createError from 'http-errors';
 import qs from 'querystring';
 
-import {coalesce, reject, node} from 'fluture/index.js';
+import {coalesce, reject, node} from 'fluture';
 import {get, lift, hoist, go, modify} from '../../index.js';
 import {getService, putService} from './util.js';
 

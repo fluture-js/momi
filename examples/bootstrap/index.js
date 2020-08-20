@@ -1,6 +1,6 @@
 /* eslint no-console:0 */
 
-import {fork} from 'fluture/index.js';
+import {fork} from 'fluture';
 import R from 'ramda';
 
 import {run} from '../../index.js';
