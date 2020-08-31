@@ -3,7 +3,7 @@ import {getService, putService} from './util.js';
 import Z from 'sanctuary-type-classes';
 import R from 'ramda';
 import {log} from 'util';
-import Future, {node, attempt} from 'fluture/index.js';
+import Future, {node, attempt} from 'fluture';
 import config from 'config';
 import mysql from 'mysql';
 

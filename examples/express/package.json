@@ -11,7 +11,7 @@
   "license": "WTFPL",
   "dependencies": {
     "express": "^4.14.0",
-    "fluture": "^12.0.0",
+    "fluture": "^13.0.1",
     "monastic": "^2.0.0",
     "sanctuary-type-classes": "^12.0.0"
   }
