@@ -6,12 +6,12 @@
     "fluture"
   ],
   "type": "module",
-  "main": "index.cjs",
+  "main": "./dist/umd.js",
   "module": "index.js",
   "exports": {
     ".": {
       "import": "./index.js",
-      "require": "./index.cjs"
+      "require": "./dist/umd.js"
     },
     "./index.js": "./index.js"
   },
@@ -28,7 +28,7 @@
     "url": "git://github.com/fluture-js/fluture-project.git"
   },
   "files": [
-    "/index.cjs",
+    "/dist",
     "/index.js",
     "/LICENSE",
     "/package.json",

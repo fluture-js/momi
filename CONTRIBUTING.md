@@ -22,7 +22,10 @@
 When adding a dependency, first consider whether to add it as
 a *regular* or as a *peer* dependency.
 
-Make sure to update `rollup.config.js` after installing a new dependency.
+Make sure to update `rollup.config.js` and the usage instructions in `index.js`
+after installing a new dependency . Peer dependencies need to be included in the
+`npm install` example, and all dependencies need to be mentioned in the UMD
+scripting instructions.
 
 ### Regular Dependency
 
