@@ -46,14 +46,14 @@
 //.
 //. You can load the EcmaScript module from various content delivery networks:
 //.
-//. - [Skypack](https://cdn.skypack.dev/momi@0.7.2)
-//. - [JSPM](https://jspm.dev/momi@0.7.2)
-//. - [jsDelivr](https://cdn.jsdelivr.net/npm/momi@0.7.2/+esm)
+//. - [Skypack](https://cdn.skypack.dev/momi@1.0.0)
+//. - [JSPM](https://jspm.dev/momi@1.0.0)
+//. - [jsDelivr](https://cdn.jsdelivr.net/npm/momi@1.0.0/+esm)
 //.
 //. ### Old Browsers and Code Pens
 //.
 //. There's a [UMD][] file included in the NPM package, also available via
-//. jsDelivr: https://cdn.jsdelivr.net/npm/momi@0.7.2/dist/umd.js
+//. jsDelivr: https://cdn.jsdelivr.net/npm/momi@1.0.0/dist/umd.js
 //.
 //. This file adds `momi` to the global scope, or use CommonJS/AMD
 //. when available.
