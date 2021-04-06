@@ -44,13 +44,13 @@
     "sanctuary-type-classes": "^12.0.0"
   },
   "peerDependencies": {
-    "fluture": ">=13.0.1 <14.0.0",
+    "fluture": ">=13.0.1 <15.0.0",
     "monastic": "^3.0.1"
   },
   "devDependencies": {
     "c8": "^7.1.0",
     "codecov": "^3.2.0",
-    "fluture": "^13.0.1",
+    "fluture": "^14.0.0",
     "monastic": "^3.0.1",
     "oletus": "^3.0.0",
     "rollup": "^2.0.0",
