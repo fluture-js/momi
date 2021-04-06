@@ -11,6 +11,16 @@ if ! npm outdated --long; then
   fi
 fi
 
+source 'node_modules/sanctuary-scripts/functions'
+
+pkg="$(get repo-name)"
+files=($(get source-files))
+
+sed --in-place "s/$pkg@0.0.0/$pkg@$VERSION/" "${files[@]}"
+sed --in-place "s/$pkg@$PREVIOUS_VERSION/$pkg@$VERSION/" "${files[@]}"
+
+git add -- "${files[@]}"
+
 npm run build
 
 sanctuary-prepublish "$@"

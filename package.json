@@ -2,7 +2,7 @@
   "name": "momi",
   "version": "0.7.2",
   "description": "Monadic middleware",
-  "tags": [
+  "keywords": [
     "fluture",
     "functional-programming",
     "middleware",
@@ -10,11 +10,14 @@
     "state"
   ],
   "type": "module",
-  "main": "index.cjs",
+  "main": "./dist/umd.js",
   "module": "index.js",
   "exports": {
-    "import": "./index.js",
-    "require": "./index.cjs"
+    ".": {
+      "import": "./index.js",
+      "require": "./dist/umd.js"
+    },
+    "./index.js": "./index.js"
   },
   "scripts": {
     "build": "rollup -c rollup.config.js",
@@ -29,7 +32,7 @@
     "url": "git://github.com/fluture-js/momi.git"
   },
   "files": [
-    "/index.cjs",
+    "/dist",
     "/index.js",
     "/LICENSE",
     "/package.json",

@@ -1,3 +1,5 @@
 /coverage/
-/index.cjs
+/dist/*
 /node_modules/
+
+!/dist/package.json

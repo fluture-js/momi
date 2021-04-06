@@ -32,6 +32,34 @@
 //.
 //. ## Usage
 //.
+//. ### Node
+//.
+//. ```console
+//. $ npm install --save momi
+//. ```
+//.
+//. On Node 12 and up, this module can be loaded directly with `import` or
+//. `require`. On Node versions below 12, `require` or the [esm][]-loader can
+//. be used.
+//.
+//. ### Deno and Modern Browsers
+//.
+//. You can load the EcmaScript module from various content delivery networks:
+//.
+//. - [Skypack](https://cdn.skypack.dev/momi@0.7.2)
+//. - [JSPM](https://jspm.dev/momi@0.7.2)
+//. - [jsDelivr](https://cdn.jsdelivr.net/npm/momi@0.7.2/+esm)
+//.
+//. ### Old Browsers and Code Pens
+//.
+//. There's a [UMD][] file included in the NPM package, also available via
+//. jsDelivr: https://cdn.jsdelivr.net/npm/momi@0.7.2/dist/umd.js
+//.
+//. This file adds `momi` to the global scope, or use CommonJS/AMD
+//. when available.
+//.
+//. ## Usage Example
+//.
 //. ```js
 //. import Z from 'sanctuary-type-classes';
 //. import qs from 'querystring';
@@ -162,3 +190,5 @@ export function run(app, initial) {
 //. [example-2]: https://github.com/fluture-js/momi/tree/master/examples/express
 //. [example-3]: https://github.com/fluture-js/momi/tree/master/examples/bootstrap
 //. [example-4]: https://github.com/Avaq/node-server-skeleton/tree/master/src/bootstrap
+//. [esm]: https://github.com/standard-things/esm
+//. [UMD]: https://github.com/umdjs/umd
