@@ -63,6 +63,7 @@
 //. ```js
 //. import Z from 'sanctuary-type-classes';
 //. import qs from 'querystring';
+//. import http from 'http';
 //.
 //. import {compose, constant} from 'monastic';
 //. import {go, mount, get, put} from 'momi';
@@ -85,7 +86,7 @@
 //.   constant (echoMiddleware)
 //. );
 //.
-//. mount (app, 3000);
+//. mount (http, app, 3000);
 //. ```
 //.
 //. ## Examples
@@ -97,7 +98,6 @@
 
 import {Future, fork, reject as rejectF} from 'fluture';
 import {StateT} from 'monastic';
-import http from 'http';
 import Z from 'sanctuary-type-classes';
 
 export const Middleware = StateT (Future);
@@ -171,7 +171,7 @@ export function connect(app) {
   };
 }
 
-export function mount(app, port) {
+export function mount(http, app, port) {
   const monad = evaluateApp (app);
   return http.createServer ((req, res) => {
     fork (err => mapErrToRes (err, res))

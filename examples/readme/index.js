@@ -1,5 +1,6 @@
 import Z from 'sanctuary-type-classes';
 import {compose, constant} from 'monastic';
+import http from 'http';
 
 import qs from 'querystring';
 
@@ -20,4 +21,4 @@ const echoMiddleware = Z.map (req => ({
 
 const app = compose (queryParseMiddleware) (constant (echoMiddleware));
 
-mount (app, 3000);
+mount (http, app, 3000);
